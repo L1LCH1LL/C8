@@ -1,71 +1,85 @@
-﻿//Задача 54: Задайте двумерный массив. Напишите программу, которая упорядочит по убыванию элементы каждой строки двумерного массива.
+// 56 Задайте прямоугольный двумерный массив. Напишите программу, которая будет находить строку с наименьшей суммой элементов.
 
-Console.Clear();
-Console.WriteLine($"Задача 54: Задайте двумерный массив. Напишите программу, которая упорядочит по убыванию элементы каждой строки двумерного массива.");
-Console.WriteLine($"\n Введите размер массива m x n и диапазон случайных значений:");
-int m = InputNumbers("Введите m: ");
-int n = InputNumbers("Введите n: ");
-int range = InputNumbers("Введите диапазон: от 1 до ");
+// Например, задан массив:
 
-int[,] array = new int[m, n];
-CreateArray(array);
-WriteArray(array);
+// 1 4 7 2
 
-Console.WriteLine($"\n Отсортированный массив: ");
-OArrayLines(array);
-WriteArray(array);
+// 5 9 2 3
 
-void OArrayLines(int[,] array)                     //основная часть (распределение)
+// 8 4 2 4
+
+// 5 2 6 7
+
+// Программа считает сумму элементов в каждой строке и выдаёт номер строки с наименьшей суммой элементов: 1 строка
+
+
+
+
+
+
+
+Console.Write("Введите размер m:  ");
+int m = Convert.ToInt32(Console.ReadLine());
+Console.Write("Введите размер n:  ");
+int n = Convert.ToInt32(Console.ReadLine());
+int sum = 0; 
+int control = 1000000;
+int lost = 0; 
+
+
+int[,] arr = new int[m, n];                           // Создание массива
+for (int i = 0; i < arr.GetLength(0); i++)
 {
-  for (int i = 0; i < array.GetLength(0); i++)
-  {
-    for (int j = 0; j < array.GetLength(1); j++)
+    for (int j = 0; j < arr.GetLength(1); j++)
     {
-      for (int k = 0; k < array.GetLength(1) - 1; k++)  
-      {
-        if (array[i, k] < array[i, k + 1])
+        arr[i, j] = new Random().Next(-9, 10);
+    }
+}
+
+
+
+for (int i = 0; i < arr.GetLength(0); i++)               //Вывод массива
+    {
+        for (int j = 0; j < arr.GetLength(1); j++)
         {
-          int temp = array[i, k + 1];
-          array[i, k + 1] = array[i, k];
-          array[i, k] = temp;
+            Console.Write($"{arr[i, j], 5}");
         }
-      }
+        Console.WriteLine();
     }
-  }
-}
 
 
 
 
-int InputNumbers(string input)                          // Создание матрицы
-{
-  Console.Write(input);
-  int output = Convert.ToInt32(Console.ReadLine());
-  return output;
-}
-
-void CreateArray(int[,] array)
-{
-  for (int i = 0; i < array.GetLength(0); i++)
-  {
-    for (int j = 0; j < array.GetLength(1); j++)
+    for (int i = 0; i < arr.GetLength(0); i++)           // Нахождение минимальной суммы элементов строки
     {
-      array[i, j] = new Random().Next(range);
+        for (int j = 0; j < arr.GetLength(1); j++)
+        {
+            sum+=arr[i, j];
+        }
+            if (sum < control) 
+            {
+                control = sum;
+            }
+        sum =0;
+        Console.Write(control);
+        Console.WriteLine();
     }
-  }
-}
 
 
-
-
-void WriteArray(int[,] array)                           // Вывод матрицы
-{
-  for (int i = 0; i < array.GetLength(0); i++)
-  {
-    for (int j = 0; j < array.GetLength(1); j++)
+for (int i = 0; i < arr.GetLength(0); i++)                 // Нахождение строки с наименьшей суммой элементов черех известный минимум
     {
-      Console.Write(array[i, j] + " ");
+        for (int j = 0; j < arr.GetLength(1); j++)
+        {
+            sum+=arr[i, j];
+            lost = i+1;
+        }
+        if (sum == control) 
+        {
+            Console.Write("Строка имеющая наименьшую суммой элементов находится под № " + lost);
+        }
+        sum = 0;
     }
-    Console.WriteLine();
-  }
-}
+
+
+// Вывод настроенн под обычных смертных, счет сток идет от еденицы )
+
