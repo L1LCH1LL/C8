@@ -1,70 +1,58 @@
-﻿//Задача 54: Задайте двумерный массив. Напишите программу, которая упорядочит по убыванию элементы каждой строки двумерного массива.
+// Задача 62: Заполните спирально массив 4 на 4.
+// 1 2 3 4
+// 12 13 14 5
+// 11 16 15 6
+// 10 9 8 7
 
 Console.Clear();
-Console.WriteLine($"Задача 54: Задайте двумерный массив. Напишите программу, которая упорядочит по убыванию элементы каждой строки двумерного массива.");
-Console.WriteLine($"\n Введите размер массива m x n и диапазон случайных значений:");
-int m = InputNumbers("Введите m: ");
-int n = InputNumbers("Введите n: ");
-int range = InputNumbers("Введите диапазон: от 1 до ");
+Console.WriteLine($"Задача 62: Заполните спирально массив 4 на 4.");
 
-int[,] array = new int[m, n];
-CreateArray(array);
-WriteArray(array);
+  
+  
+int n = 4;
+int[,] sqareMatrix = new int[n, n];
 
-Console.WriteLine($"\n Отсортированный массив: ");
-OArrayLines(array);
-WriteArray(array);
 
-void OArrayLines(int[,] array)                     //основная часть (распределение)
+
+int temp = 1;
+int i = 0;
+int j = 0;
+
+
+
+
+while (temp <= sqareMatrix.GetLength(0) * sqareMatrix.GetLength(1))
 {
-  for (int i = 0; i < array.GetLength(0); i++)
-  {
-    for (int j = 0; j < array.GetLength(1); j++)
-    {
-      for (int k = 0; k < array.GetLength(1) - 1; k++)  
-      {
-        if (array[i, k] < array[i, k + 1])
-        {
-          int temp = array[i, k + 1];
-          array[i, k + 1] = array[i, k];
-          array[i, k] = temp;
-        }
-      }
-    }
-  }
+  sqareMatrix[i, j] = temp;
+  temp++;
+  if (i <= j + 1 && i + j < sqareMatrix.GetLength(1) - 1)
+    j++;
+  else if (i < j && i + j >= sqareMatrix.GetLength(0) - 1)
+    i++;
+  else if (i >= j && i + j > sqareMatrix.GetLength(1) - 1)
+    j--;
+  else
+    i--;
 }
 
 
 
 
-int InputNumbers(string input)                          // Создание матрицы
-{
-  Console.Write(input);
-  int output = Convert.ToInt32(Console.ReadLine());
-  return output;
-}
+WriteArray(sqareMatrix);
 
-void CreateArray(int[,] array)
+
+
+
+void WriteArray (int[,] array)
 {
   for (int i = 0; i < array.GetLength(0); i++)
   {
     for (int j = 0; j < array.GetLength(1); j++)
     {
-      array[i, j] = new Random().Next(range);
-    }
-  }
-}
+      if (array[i,j] / 10 <= 0)
+      Console.Write($" {array[i,j]} ");
 
-
-
-
-void WriteArray(int[,] array)                           // Вывод матрицы
-{
-  for (int i = 0; i < array.GetLength(0); i++)
-  {
-    for (int j = 0; j < array.GetLength(1); j++)
-    {
-      Console.Write(array[i, j] + " ");
+      else Console.Write($"{array[i,j]} ");
     }
     Console.WriteLine();
   }
